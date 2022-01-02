@@ -1,6 +1,7 @@
 use clap::{AppSettings, Parser, Subcommand};
 use cmd_lib::run_cmd;
 use std::io::{BufRead, BufReader};
+use std::process::exit;
 use std::{env, fmt, fs};
 
 const INTEL_BRIGHTNESS_FILE: &'static str = "/sys/class/backlight/intel_backlight/brightness";
@@ -118,11 +119,13 @@ fn main() {
     check_root()
         .map_err(|x| {
             println!("{:?}", x);
+            exit(1)
         })
         .unwrap();
     operation_with_file()
         .map_err(|x| {
             println!("{:?}", x);
+            exit(1)
         })
         .unwrap();
 }
